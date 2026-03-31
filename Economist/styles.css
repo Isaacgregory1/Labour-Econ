@@ -79,14 +79,15 @@ h4 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 3rem;
+    display: block;
+    /* Single column */
 }
 
 .article-content {
-    max-width: 700px;
-    justify-self: center;
+    max-width: 900px;
+    /* Wider for full-page feel */
+    margin: 0 auto;
+    /* Center */
 }
 
 .section-label {
@@ -306,187 +307,126 @@ h4 {
     text-decoration: underline;
 }
 
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border-color);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.site-footer a {
+    color: var(--economist-red);
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+/* =====================
+   PRINT STYLES
+   ===================== */
 /* =====================
    PRINT STYLES
    ===================== */
 @media print {
     @page {
-        margin: 1.5cm 2cm;
+        margin: 1cm;
         size: A4 portrait;
-
-        @bottom-right {
-            content: "Page " counter(page);
-            font-family: var(--font-sans);
-            font-size: 8pt;
-        }
     }
 
     * {
-        background: transparent !important;
-        color: #000 !important;
-        box-shadow: none !important;
-        text-shadow: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
-    /* Hide non-content elements */
-    .masthead,
-    .nav-links,
-    .sidebar,
-    .pull-quote,
-    .metadata {
-        display: none !important;
+    body {
+        background-color: var(--canvas-bg) !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-size: 11pt;
     }
 
-    /* Print Header */
-    .print-only-header {
+    /* Scale down masthead for print */
+    .masthead {
+        position: relative;
+        padding: 0.5rem 1rem !important;
+        border-bottom: 1px solid var(--border-color);
         display: flex !important;
         justify-content: space-between;
         align-items: center;
-        border-bottom: none;
-        /* Red bar is now per-page or per-logo */
-        margin-bottom: 3rem;
     }
 
-    .print-logo {
-        background-color: var(--economist-red) !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        color: #FFF !important;
-        padding: 10pt 15pt;
-        font-family: var(--font-serif);
-        font-weight: 800;
-        font-size: 20pt;
-        line-height: 1;
-        display: inline-block;
-        letter-spacing: -1px;
+    .logo-box {
+        padding: 4pt 8pt !important;
+        font-size: 1.2rem !important;
     }
 
-    .print-date {
-        font-family: var(--font-sans);
-        font-size: 10pt;
-        text-transform: uppercase;
-        color: #000 !important;
-        border-bottom: 1px solid #000;
-        padding-bottom: 2pt;
+    .nav-links {
+        display: flex !important;
+        gap: 1rem !important;
+        font-size: 0.7rem !important;
     }
 
-    /* Full-width single column layout */
+    .sidebar {
+        display: none !important;
+        /* Fully remove in print */
+    }
+
+    /* Adjust Container for single column in print */
     .container {
-        display: block;
-        max-width: 100%;
-        padding: 0;
-        margin: 0;
+        display: block !important;
+        max-width: 100% !important;
+        padding: 0.5cm !important;
+        margin: 0 !important;
     }
 
     .article-content {
-        max-width: 100%;
-        width: 100%;
+        max-width: 100% !important;
     }
 
-    /* Typography */
-    body {
-        font-size: 10.5pt;
-        line-height: 1.6;
-        font-family: "Source Serif 4", "Georgia", serif;
-        background-color: white !important;
-    }
-
-    .headline {
-        font-size: 28pt;
-        line-height: 1.1;
-        margin-bottom: 1rem;
-        font-weight: 900;
-    }
-
-    .standfirst {
-        font-size: 13pt;
-        line-height: 1.4;
-        margin-bottom: 2rem;
-        color: #333 !important;
-    }
-
+    /* Match Web Typography (Left-aligned) */
     .article-body {
-        text-align: justify;
-        hyphens: auto;
-        -webkit-hyphens: auto;
+        text-align: left !important;
+        hyphens: none !important;
+        -webkit-hyphens: none !important;
     }
 
     .article-body p {
-        margin-bottom: 1rem;
-        orphans: 4;
-        widows: 4;
+        orphans: 3;
+        widows: 3;
     }
 
-    /* Hero image */
-    .hero-image-container {
-        margin: 2rem 0;
-        page-break-inside: avoid;
-    }
-
-    .hero-image {
-        max-height: 250px;
-        width: auto;
-        display: block;
-        margin: 0 auto;
-        border: 1px solid #eee;
-    }
-
-    /* Figures: Keep together */
+    /* Figures: Keep web-like styling but avoid breaks */
     .chart-wrapper {
         page-break-inside: avoid;
         break-inside: avoid;
-        border: 1px solid #eee;
-        padding: 1rem 0;
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
         margin: 2rem 0;
-        background-color: transparent !important;
+        background-color: #FFF !important;
     }
 
     .figure-img {
         max-width: 100%;
-        width: 100%;
+        width: auto;
         display: block;
-        margin: 0 auto 0.5rem;
+        margin: 0 auto 1rem;
     }
 
-    .chart-footer {
-        font-size: 8.5pt;
-        color: #444 !important;
-        padding-top: 0.5rem;
-        border-top: 1px solid #eee;
-        font-family: var(--font-sans);
-        text-transform: none;
-        letter-spacing: normal;
+    /* Hide the specialized print-only header */
+    .print-only-header {
+        display: none !important;
     }
 
-    /* Section headings */
-    .section-heading {
-        page-break-after: avoid;
-        break-after: avoid;
-        font-size: 16pt;
-        margin-top: 2rem;
-        border-top: 1px solid #ddd;
-        padding-top: 1rem;
-    }
-
-    /* References */
-    .references-list {
-        font-size: 8.5pt;
-        line-height: 1.4;
-        column-count: 1;
-        /* Keep simple for PDF flow */
-    }
-
-    .references-list li {
-        margin-bottom: 0.5rem;
-    }
-
-    /* Drop cap */
+    /* Drop cap: Keep web size */
     .article-body>p:first-of-type::first-letter {
-        font-size: 4rem;
-        float: left;
-        margin-right: 0.5rem;
-        line-height: 0.8;
-        color: var(--economist-red) !important;
+        font-size: 5.5rem;
+        line-height: 0.85;
+        color: var(--text-primary) !important;
     }
 }
 
